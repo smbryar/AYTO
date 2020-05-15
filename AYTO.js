@@ -1,12 +1,20 @@
+// Change players here
 const players = ["A", "B", "C", "D", "E", "F", "G", "H", "a", "b", "c", "d", "e", "f", "g", "h"]; // Perfect matches are same letter e.g. A and a
 
+// Change number of games played here
+console.log(multipleGamesAYTO(10000));
+
 function multipleGamesAYTO(games) {
-  let lights = [0,0,0,0,0,0,0,0,0];
+  let lights = new Array((players.length/2 + 1)).fill(0);
   for (let i=0; i<games; i++) {
     lights[gameAYTO(players)] += 1;
   }
   const likelihood = lights.map(val => val*100/games);
-  return likelihood;
+  let str = `${players.length} players, ${games} games \n`;
+  return likelihood.reduce((str,percent,i) => {
+    str = str + `${i} lights: ${percent}%\n`;
+    return str;
+  },str);
 }
 
 function gameAYTO(players) {
@@ -34,5 +42,3 @@ function gameAYTO(players) {
   },0)
   return lights;
 }
-
-multipleGamesAYTO(100000);
